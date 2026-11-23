@@ -14,5 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "GastosCorsa"
+rootProject.name = "Mechanicar"
 include(":app")

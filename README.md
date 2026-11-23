@@ -1,6 +1,6 @@
-# Gastos Corsa
+# Mechanicar
 
-App Android em Kotlin para controlar e visualizar os gastos de manutenção do **Chevrolet Corsa Hatch Maxx 2012 (ISO0D85)**.
+App Android em Kotlin para controlar e visualizar os gastos de manutenção do carro (ex.: **Chevrolet Corsa Hatch Maxx 2012 · ISO0D85**).
 
 ## O que o app faz
 
