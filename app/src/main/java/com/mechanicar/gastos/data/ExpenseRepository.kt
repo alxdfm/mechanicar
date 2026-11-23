@@ -2,13 +2,25 @@ package com.mechanicar.gastos.data
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
 import java.time.LocalDate
 
 class ExpenseRepository(
+    private val vehicleDao: VehicleDao,
     private val visitDao: VisitDao,
     private val serviceDao: ServiceDao
 ) {
+    fun observeVehicle(): Flow<VehicleEntity?> = vehicleDao.observe()
+
+    suspend fun ensureDefaultVehicle() {
+        if (vehicleDao.get() == null) {
+            vehicleDao.upsert(VehicleEntity.defaultCorsa())
+        }
+    }
+
+    suspend fun saveVehicle(vehicle: VehicleEntity) {
+        vehicleDao.upsert(vehicle.copy(id = VehicleEntity.SINGLE_VEHICLE_ID))
+    }
+
     fun observeVisits(): Flow<List<VisitWithServices>> = visitDao.observeVisits()
 
     fun observeVisit(id: Long): Flow<VisitWithServices?> = visitDao.observeVisit(id)

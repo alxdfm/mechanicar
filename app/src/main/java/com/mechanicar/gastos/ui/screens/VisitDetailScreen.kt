@@ -53,7 +53,7 @@ fun VisitDetailScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Detalhe da consulta") },
+                title = { Text("Detalhe da visita") },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Voltar")
@@ -73,7 +73,7 @@ fun VisitDetailScreen(
         val visit = visitState
         if (visit == null) {
             Text(
-                text = "Consulta não encontrada.",
+                text = "Visita não encontrada.",
                 modifier = Modifier.padding(padding).padding(20.dp)
             )
             return@Scaffold
@@ -157,7 +157,7 @@ fun VisitDetailScreen(
     if (confirmDelete) {
         AlertDialog(
             onDismissRequest = { confirmDelete = false },
-            title = { Text("Excluir consulta?") },
+            title = { Text("Excluir visita?") },
             text = { Text("Os serviços desta visita também serão removidos.") },
             confirmButton = {
                 TextButton(

@@ -10,6 +10,18 @@ import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
 @Dao
+interface VehicleDao {
+    @Query("SELECT * FROM vehicle WHERE id = :id LIMIT 1")
+    fun observe(id: Long = VehicleEntity.SINGLE_VEHICLE_ID): Flow<VehicleEntity?>
+
+    @Query("SELECT * FROM vehicle WHERE id = :id LIMIT 1")
+    suspend fun get(id: Long = VehicleEntity.SINGLE_VEHICLE_ID): VehicleEntity?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsert(vehicle: VehicleEntity)
+}
+
+@Dao
 interface VisitDao {
     @Transaction
     @Query("SELECT * FROM visits ORDER BY dateEpochDay DESC, id DESC")
