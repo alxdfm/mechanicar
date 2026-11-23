@@ -57,4 +57,4 @@ Também dá para disparar manualmente em **Actions → Build APK → Run workflo
 - Kotlin + Jetpack Compose + Material 3
 - Room (persistência local)
 - Navigation Compose
-- Apache POI (leitura de `.xlsx`)
+- Importação CSV e `.xlsx` (leitor OOXML próprio, sem Apache POI)

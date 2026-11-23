@@ -4,6 +4,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.io.ByteArrayInputStream
+import java.io.File
 import java.nio.charset.StandardCharsets
 
 class SpreadsheetImporterTest {
@@ -43,5 +44,30 @@ class SpreadsheetImporterTest {
         )
         assertEquals(1, rows.size)
         assertEquals("Junta", rows[0].itemName)
+    }
+
+    @Test
+    fun parsesBundledImportXlsx() {
+        val xlsx = File("import/gastos_corsa_importacao.xlsx")
+            .takeIf { it.exists() }
+            ?: File("../import/gastos_corsa_importacao.xlsx")
+        assertTrue("Planilha de importação não encontrada", xlsx.exists())
+
+        val rows = SpreadsheetImporter.parseXlsx(xlsx.inputStream())
+        assertEquals(85, rows.size)
+        assertEquals(13, rows.map { Triple(it.date, it.origin, it.workshop) }.toSet().size)
+        val total = rows.sumOf { it.quantity * it.unitPrice }
+        assertEquals(17349.43, total, 0.05)
+    }
+
+    @Test
+    fun parsesBundledImportCsv() {
+        val csv = File("app/src/main/assets/gastos_corsa_importacao.csv")
+            .takeIf { it.exists() }
+            ?: File("src/main/assets/gastos_corsa_importacao.csv")
+        assertTrue(csv.exists())
+
+        val rows = SpreadsheetImporter.parseCsv(csv.inputStream())
+        assertEquals(85, rows.size)
     }
 }

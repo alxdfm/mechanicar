@@ -19,10 +19,12 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.LocalDate
 
 class AppViewModel(
@@ -91,15 +93,17 @@ class AppViewModel(
         viewModelScope.launch {
             _importing.value = true
             try {
-                val rows = SpreadsheetImporter.importFromUri(getApplication(), uri)
-                if (rows.isEmpty()) {
-                    _message.emit("Nenhum lançamento válido encontrado na planilha.")
-                    return@launch
+                val result = withContext(Dispatchers.IO) {
+                    val rows = SpreadsheetImporter.importFromUri(getApplication(), uri)
+                    if (rows.isEmpty()) null else repository.importRows(rows, replaceExisting)
                 }
-                val result = repository.importRows(rows, replaceExisting)
-                emitImportSuccess(result)
-            } catch (ex: Exception) {
-                _message.emit("Falha ao importar: ${ex.message ?: "erro desconhecido"}")
+                if (result == null) {
+                    _message.emit("Nenhum lançamento válido encontrado na planilha.")
+                } else {
+                    emitImportSuccess(result)
+                }
+            } catch (ex: Throwable) {
+                _message.emit("Falha ao importar: ${ex.message ?: ex.javaClass.simpleName}")
             } finally {
                 _importing.value = false
             }
@@ -110,11 +114,13 @@ class AppViewModel(
         viewModelScope.launch {
             _importing.value = true
             try {
-                val rows = SpreadsheetImporter.importFromAssets(getApplication())
-                val result = repository.importRows(rows, replaceExisting)
+                val result = withContext(Dispatchers.IO) {
+                    val rows = SpreadsheetImporter.importFromAssets(getApplication())
+                    repository.importRows(rows, replaceExisting)
+                }
                 emitImportSuccess(result)
-            } catch (ex: Exception) {
-                _message.emit("Falha ao carregar dados iniciais: ${ex.message ?: "erro"}")
+            } catch (ex: Throwable) {
+                _message.emit("Falha ao carregar dados iniciais: ${ex.message ?: ex.javaClass.simpleName}")
             } finally {
                 _importing.value = false
             }

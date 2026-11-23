@@ -2,15 +2,12 @@ package com.mechanicar.gastos.data
 
 import android.content.Context
 import android.net.Uri
-import org.apache.poi.ss.usermodel.DataFormatter
-import org.apache.poi.ss.usermodel.DateUtil
-import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.io.BufferedReader
+import java.io.ByteArrayInputStream
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.nio.charset.Charset
 import java.time.LocalDate
-import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.util.Locale
@@ -30,73 +27,58 @@ object SpreadsheetImporter {
     }
 
     fun importFromUri(context: Context, uri: Uri): List<ImportRow> {
-        val name = context.contentResolver.getType(uri).orEmpty().lowercase(Locale.ROOT)
-        val display = uri.lastPathSegment?.lowercase(Locale.ROOT).orEmpty()
-        return context.contentResolver.openInputStream(uri)?.use { stream ->
-            when {
-                name.contains("sheet") || display.endsWith(".xlsx") || display.endsWith(".xls") ->
-                    parseXlsx(stream)
-                else -> parseCsv(stream)
-            }
-        } ?: emptyList()
+        val bytes = context.contentResolver.openInputStream(uri)?.use { it.readBytes() }
+            ?: return emptyList()
+        return parseBytes(bytes, guessIsXlsx(context, uri, bytes))
+    }
+
+    fun parseBytes(bytes: ByteArray, forceXlsx: Boolean = false): List<ImportRow> {
+        return if (forceXlsx || looksLikeXlsx(bytes)) {
+            parseXlsx(ByteArrayInputStream(bytes))
+        } else {
+            parseCsv(ByteArrayInputStream(bytes))
+        }
     }
 
     fun parseCsv(input: InputStream): List<ImportRow> {
         val reader = BufferedReader(InputStreamReader(input, Charset.forName("UTF-8")))
-        val lines = reader.readLines().filter { it.isNotBlank() }
+        val lines = reader.readLines()
+            .map { it.removePrefix("\uFEFF") }
+            .filter { it.isNotBlank() }
         if (lines.isEmpty()) return emptyList()
 
         val header = splitCsvLine(lines.first()).map { normalizeHeader(it) }
         val index = headerIndex(header)
 
         return lines.drop(1).mapNotNull { line ->
-            val cols = splitCsvLine(line)
-            rowFromColumns(cols, index)
+            rowFromColumns(splitCsvLine(line), index)
         }
     }
 
     fun parseXlsx(input: InputStream): List<ImportRow> {
-        val workbook = XSSFWorkbook(input)
-        val sheet = workbook.sheetIterator().asSequence()
-            .firstOrNull { it.sheetName.equals("Importacao", ignoreCase = true) }
-            ?: workbook.getSheetAt(0)
+        val matrix = XlsxReader.readFirstOrNamedSheet(input, preferredSheetName = "Importacao")
+        if (matrix.isEmpty()) return emptyList()
 
-        val formatter = DataFormatter(Locale("pt", "BR"))
-        val rows = sheet.iterator().asSequence().toList()
-        if (rows.isEmpty()) {
-            workbook.close()
-            return emptyList()
-        }
-
-        val headerRow = rows.first()
-        val header = headerRow.map { normalizeHeader(formatter.formatCellValue(it)) }
+        val header = matrix.first().map { normalizeHeader(it) }
         val index = headerIndex(header)
+        return matrix.drop(1).mapNotNull { cols -> rowFromColumns(cols, index) }
+    }
 
-        val result = rows.drop(1).mapNotNull { row ->
-            val cols = MutableList(header.size) { "" }
-            row.forEach { cell ->
-                val idx = cell.columnIndex
-                if (idx < cols.size) {
-                    cols[idx] = when {
-                        DateUtil.isCellDateFormatted(cell) -> {
-                            cell.localDateTimeCellValue.toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
-                        }
-                        else -> formatter.formatCellValue(cell).trim()
-                    }
-                }
-            }
-            // Prefer real date cells when present
-            index["data"]?.let { dataIdx ->
-                val cell = row.getCell(dataIdx)
-                if (cell != null && DateUtil.isCellDateFormatted(cell)) {
-                    val date = cell.dateCellValue.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-                    cols[dataIdx] = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
-                }
-            }
-            rowFromColumns(cols, index)
-        }
-        workbook.close()
-        return result
+    private fun guessIsXlsx(context: Context, uri: Uri, bytes: ByteArray): Boolean {
+        val mime = context.contentResolver.getType(uri).orEmpty().lowercase(Locale.ROOT)
+        val name = uri.lastPathSegment?.lowercase(Locale.ROOT).orEmpty()
+        return looksLikeXlsx(bytes) ||
+            mime.contains("sheet") ||
+            mime.contains("excel") ||
+            name.endsWith(".xlsx") ||
+            name.endsWith(".xls")
+    }
+
+    private fun looksLikeXlsx(bytes: ByteArray): Boolean {
+        // ZIP magic used by .xlsx
+        return bytes.size >= 4 &&
+            bytes[0] == 0x50.toByte() &&
+            bytes[1] == 0x4B.toByte()
     }
 
     private fun headerIndex(header: List<String>): Map<String, Int> {
@@ -127,7 +109,7 @@ object SpreadsheetImporter {
 
         return ImportRow(
             date = date,
-            odometerKm = col("km").toIntOrNull(),
+            odometerKm = parseNumber(col("km"))?.toInt(),
             origin = col("origem"),
             workshop = col("oficina"),
             category = col("categoria").ifBlank { ServiceCategory.OUTROS.label },
@@ -175,8 +157,8 @@ object SpreadsheetImporter {
             } catch (_: DateTimeParseException) {
             }
         }
-        // Excel serial as plain number in CSV edge-case
-        value.toDoubleOrNull()?.let { serial ->
+        // Excel serial number (days since 1899-12-30)
+        parseNumber(value)?.let { serial ->
             if (serial > 20000) {
                 return LocalDate.of(1899, 12, 30).plusDays(serial.toLong())
             }
@@ -192,7 +174,6 @@ object SpreadsheetImporter {
             .replace(" ", "")
             .let {
                 if (it.contains(',') && it.contains('.')) {
-                    // 1.234,56
                     it.replace(".", "").replace(',', '.')
                 } else if (it.contains(',')) {
                     it.replace(',', '.')
