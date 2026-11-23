@@ -1,0 +1,71 @@
+name: Build APK
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: build-apk-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Assemble debug APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Accept Android SDK licenses
+        run: |
+          mkdir -p "$ANDROID_HOME/licenses"
+          printf '%s\n' \
+            '24333f8a63b6825ea9c5514f83c2829b004d1fee' \
+            > "$ANDROID_HOME/licenses/android-sdk-license"
+          printf '%s\n' \
+            '84831b9409646a918e30573bab4c9c91346d8abd' \
+            > "$ANDROID_HOME/licenses/android-sdk-preview-license"
+
+      - name: Install Android SDK packages
+        run: |
+          SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          if [ ! -x "$SDKMANAGER" ]; then
+            SDKMANAGER=$(find "$ANDROID_HOME/cmdline-tools" -type f -name sdkmanager | head -n 1)
+          fi
+          yes | "$SDKMANAGER" --sdk_root="$ANDROID_HOME" \
+            "platforms;android-35" \
+            "build-tools;35.0.0" \
+            "platform-tools" || true
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build debug APK
+        run: ./gradlew :app:assembleDebug --no-daemon --stacktrace
+
+      - name: Rename APK
+        run: |
+          mkdir -p dist
+          SHORT_SHA="${GITHUB_SHA::7}"
+          REF_NAME="${GITHUB_REF_NAME//\//-}"
+          cp app/build/outputs/apk/debug/app-debug.apk \
+            "dist/gastos-corsa-${REF_NAME}-${SHORT_SHA}.apk"
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gastos-corsa-apk
+          path: dist/*.apk
+          if-no-files-found: error
+          retention-days: 30
