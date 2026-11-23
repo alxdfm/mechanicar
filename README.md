@@ -41,6 +41,16 @@ Dados iniciais: **13 consultas**, **85 serviços**, total **R$ 17.349,43**.
 ./gradlew :app:assembleDebug
 ```
 
+## APK via GitHub Actions
+
+A cada push (e em pull requests), o workflow **Build APK** gera o APK debug e publica como artifact.
+
+1. Abra a aba **Actions** do repositório
+2. Entre no run do commit desejado
+3. Baixe o artifact `gastos-corsa-apk`
+
+Também dá para disparar manualmente em **Actions → Build APK → Run workflow**.
+
 ## Stack
 
 - Kotlin + Jetpack Compose + Material 3
