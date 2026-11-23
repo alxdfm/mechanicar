@@ -71,7 +71,7 @@ fun GastosNavHost(@Suppress("UNUSED_PARAMETER") repository: ExpenseRepository) {
         floatingActionButton = {
             if (showFab) {
                 FloatingActionButton(onClick = { navController.navigate(Routes.VISIT_NEW) }) {
-                    Icon(Icons.Default.Add, contentDescription = "Nova visita")
+                    Icon(Icons.Default.Add, contentDescription = "Nova manutenção")
                 }
             }
         },
@@ -100,7 +100,7 @@ fun GastosNavHost(@Suppress("UNUSED_PARAMETER") repository: ExpenseRepository) {
                             }
                         },
                         icon = { Icon(Icons.AutoMirrored.Filled.List, contentDescription = null) },
-                        label = { Text("Visitas") }
+                        label = { Text("Manutenções") }
                     )
                     NavigationBarItem(
                         selected = route == Routes.IMPORT,

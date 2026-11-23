@@ -1,7 +1,6 @@
 package com.mechanicar.gastos.ui.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,10 +15,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DirectionsCar
-import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -47,6 +46,7 @@ fun DashboardScreen(
     val vehicle by viewModel.vehicle.collectAsState()
     val maxCategory = stats.byCategory.maxOfOrNull { it.total } ?: 1.0
     val vehicleLabel = vehicle?.displayName ?: VehicleEntity.defaultCorsa().displayName
+    val vehicleColor = vehicle?.color
 
     Column(
         modifier = Modifier
@@ -65,41 +65,31 @@ fun DashboardScreen(
                         )
                     )
                 )
-                .padding(horizontal = 24.dp, vertical = 32.dp)
+                .padding(start = 24.dp, end = 12.dp, top = 20.dp, bottom = 32.dp)
         ) {
-            Column {
+            IconButton(
+                onClick = onEditVehicle,
+                modifier = Modifier.align(Alignment.TopEnd)
+            ) {
+                Icon(
+                    Icons.Default.Settings,
+                    contentDescription = "Editar dados do carro",
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
+            }
+
+            Column(modifier = Modifier.padding(end = 40.dp)) {
                 Text(
                     text = "Gastos Corsa",
                     style = MaterialTheme.typography.displayLarge,
                     color = MaterialTheme.colorScheme.onPrimary
                 )
                 Spacer(Modifier.height(8.dp))
-                Row(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(10.dp))
-                        .clickable(onClick = onEditVehicle)
-                        .padding(vertical = 4.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Icon(
-                        Icons.Default.DirectionsCar,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.9f)
-                    )
-                    Text(
-                        text = vehicleLabel,
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.9f),
-                        modifier = Modifier.weight(1f, fill = false)
-                    )
-                    Icon(
-                        Icons.Default.Edit,
-                        contentDescription = "Editar veículo",
-                        tint = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.9f)
-                    )
-                }
-                val vehicleColor = vehicle?.color
+                Text(
+                    text = vehicleLabel,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.9f)
+                )
                 if (!vehicleColor.isNullOrBlank()) {
                     Text(
                         text = vehicleColor,
@@ -121,17 +111,13 @@ fun DashboardScreen(
                 )
                 Spacer(Modifier.height(16.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(24.dp)) {
-                    MetricChip("${stats.visitCount}", "visitas")
+                    MetricChip("${stats.visitCount}", "manutenções")
                     MetricChip("${stats.serviceCount}", "serviços")
                 }
             }
         }
 
         Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)) {
-            TextButton(onClick = onEditVehicle) {
-                Text("Editar dados do carro")
-            }
-
             if (stats.visitCount == 0) {
                 Text(
                     text = "Nenhum gasto cadastrado ainda.",
@@ -139,12 +125,12 @@ fun DashboardScreen(
                 )
                 Spacer(Modifier.height(8.dp))
                 Text(
-                    text = "Importe a planilha inicial ou registre a primeira visita ao mecânico.",
+                    text = "Importe a planilha inicial ou registre a primeira manutenção no mecânico.",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Spacer(Modifier.height(16.dp))
-                Button(onClick = onOpenVisits) { Text("Ver visitas") }
+                Button(onClick = onOpenVisits) { Text("Ver manutenções") }
             } else {
                 SectionTitle("Por categoria")
                 Spacer(Modifier.height(12.dp))
@@ -196,7 +182,7 @@ fun DashboardScreen(
                 }
 
                 Spacer(Modifier.height(16.dp))
-                TextButton(onClick = onOpenVisits) { Text("Abrir histórico de visitas") }
+                TextButton(onClick = onOpenVisits) { Text("Abrir histórico de manutenções") }
             }
             Spacer(Modifier.height(24.dp))
         }

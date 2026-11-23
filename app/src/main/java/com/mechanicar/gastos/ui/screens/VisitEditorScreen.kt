@@ -107,7 +107,7 @@ fun VisitEditorScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(if (visitId == null) "Nova visita" else "Editar visita")
+                    Text(if (visitId == null) "Nova manutenção" else "Editar manutenção")
                 },
                 navigationIcon = {
                     IconButton(onClick = onCancel) {
@@ -156,7 +156,7 @@ fun VisitEditorScreen(
             OutlinedTextField(
                 value = notes,
                 onValueChange = { notes = it },
-                label = { Text("Observações da visita") },
+                label = { Text("Observações da manutenção") },
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -209,7 +209,7 @@ fun VisitEditorScreen(
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Salvar visita")
+                Text("Salvar manutenção")
             }
             Spacer(Modifier.height(24.dp))
         }

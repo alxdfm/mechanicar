@@ -75,7 +75,7 @@ class AppViewModel(
                 return@launch
             }
             val id = repository.saveVisit(visitId, date, odometerKm, origin, workshop, notes, services)
-            _message.emit("Visita salva.")
+            _message.emit("Manutenção salva.")
             onSaved(id)
         }
     }
@@ -83,7 +83,7 @@ class AppViewModel(
     fun deleteVisit(visit: VisitEntity) {
         viewModelScope.launch {
             repository.deleteVisit(visit)
-            _message.emit("Visita removida.")
+            _message.emit("Manutenção removida.")
         }
     }
 
@@ -123,7 +123,7 @@ class AppViewModel(
 
     private suspend fun emitImportSuccess(result: ImportResult) {
         _message.emit(
-            "Importação concluída: ${result.visitsCreated} visitas e ${result.servicesCreated} serviços."
+            "Importação concluída: ${result.visitsCreated} manutenções e ${result.servicesCreated} serviços."
         )
     }
 

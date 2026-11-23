@@ -6,7 +6,7 @@ App Android em Kotlin para controlar e visualizar os gastos de manutenção do *
 
 - **Resumo**: total investido, gastos por categoria e por ano, faixa de KM
 - **Meu carro**: editar marca, modelo, ano, placa, cor e observações do veículo
-- **Visitas**: cada visita ao mecânico com data, KM, origem (OS/orçamento), oficina e observações
+- **Manutenções**: cada manutenção no mecânico com data, KM, origem (OS/orçamento), oficina e observações
 - **Serviços**: itens feitos no dia, com quantidade, valor unitário e classificação (categoria)
 - **Importação**: carrega planilha `.xlsx` ou `.csv`, ou os dados iniciais embutidos do Corsa
 
@@ -27,10 +27,10 @@ data, km, origem, oficina, categoria, item, quantidade, valor_unitario, observac
 ```
 
 - Data: `DD/MM/AAAA` ou `AAAA-MM-DD`
-- O app agrupa linhas com a mesma **data + origem + oficina** em uma visita
+- O app agrupa linhas com a mesma **data + origem + oficina** em uma manutenção
 - Categorias: Revisão/Óleo e filtros, Arrefecimento, Freios, Suspensão, Motor, Transmissão/Câmbio, Pneus/Alinhamento, Elétrica/Iluminação, Escapamento, Combustível, Mão de obra
 
-Dados iniciais: **13 visitas**, **85 serviços**, total **R$ 17.349,43**.
+Dados iniciais: **13 manutenções**, **85 serviços**, total **R$ 17.349,43**.
 
 ## Como abrir no Android Studio
 

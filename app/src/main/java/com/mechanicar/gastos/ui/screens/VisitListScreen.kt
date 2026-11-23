@@ -40,9 +40,9 @@ fun VisitListScreen(
             .padding(horizontal = 20.dp)
     ) {
         Spacer(Modifier.height(20.dp))
-        Text("Visitas", style = MaterialTheme.typography.headlineLarge)
+        Text("Manutenções", style = MaterialTheme.typography.headlineLarge)
         Text(
-            text = "Cada visita ao mecânico com serviços, valores e classificação.",
+            text = "Cada manutenção no mecânico com serviços, valores e classificação.",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -50,7 +50,7 @@ fun VisitListScreen(
 
         if (visits.isEmpty()) {
             Text(
-                text = "Nenhuma visita cadastrada. Toque em + para criar ou importe a planilha.",
+                text = "Nenhuma manutenção cadastrada. Toque em + para criar ou importe a planilha.",
                 style = MaterialTheme.typography.bodyLarge
             )
         } else {

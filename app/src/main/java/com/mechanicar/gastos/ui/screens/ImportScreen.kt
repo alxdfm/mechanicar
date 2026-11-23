@@ -55,7 +55,7 @@ fun ImportScreen(viewModel: AppViewModel) {
         Spacer(Modifier.height(8.dp))
         Text(
             text = "Use a planilha gerada em import/gastos_corsa_importacao.xlsx (ou .csv). " +
-                "O app agrupa os itens pela mesma data, origem e oficina em uma visita.",
+                "O app agrupa os itens pela mesma data, origem e oficina em uma manutenção.",
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
