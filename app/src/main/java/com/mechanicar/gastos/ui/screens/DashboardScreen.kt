@@ -79,7 +79,7 @@ fun DashboardScreen(
 
             Column(modifier = Modifier.padding(end = 40.dp)) {
                 Text(
-                    text = "Gastos Corsa",
+                    text = "Mechanicar",
                     style = MaterialTheme.typography.displayLarge,
                     color = MaterialTheme.colorScheme.onPrimary
                 )
