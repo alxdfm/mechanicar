@@ -1,0 +1,86 @@
+data,km,origem,oficina,categoria,item,quantidade,valor_unitario,observacao
+07/07/2023,,Orçamento/recibo,,Revisão/Óleo e filtros,Óleo,1.0,140.0,
+07/07/2023,,Orçamento/recibo,,Revisão/Óleo e filtros,Filtro,1.0,28.0,Tipo de filtro não informado
+07/07/2023,,Orçamento/recibo,,Motor,Junta da tampa de válvulas,1.0,36.0,
+07/07/2023,,Orçamento/recibo,,Elétrica/Iluminação,Lâmpada do farol,1.0,42.0,
+07/07/2023,,Orçamento/recibo,,Arrefecimento,Reservatório de água do motor,1.0,110.0,Troca diferente da de 03/06/2026
+07/07/2023,,Orçamento/recibo,,Arrefecimento,Tampa do reservatório de água,1.0,68.0,
+07/07/2023,,Orçamento/recibo,,Arrefecimento,Aditivo de água do radiador,1.0,40.0,
+07/07/2023,,Orçamento/recibo,,Mão de obra,Mão de obra,1.0,240.0,
+02/08/2023,,Orçamento/recibo,,Pneus/Alinhamento,Pneus + balanceamento + geometria,1.0,1880.0,"Valor único, sem detalhamento"
+04/08/2023,,Orçamento/recibo,,Revisão/Óleo e filtros,Filtro do ar-condicionado,1.0,60.0,
+03/01/2024,,Orçamento/recibo,,Revisão/Óleo e filtros,Óleo,1.0,168.0,
+03/01/2024,,Orçamento/recibo,,Revisão/Óleo e filtros,Filtro,1.0,32.0,Tipo de filtro não informado
+03/01/2024,,Orçamento/recibo,,Arrefecimento,Aditivo de radiador,1.0,58.0,
+03/01/2024,,Orçamento/recibo,,Motor,Velas,1.0,98.0,
+03/01/2024,,Orçamento/recibo,,Mão de obra,Mão de obra,1.0,100.0,
+03/01/2024,,Orçamento/recibo,,Motor,Calço de motor,1.0,158.0,
+03/01/2024,,Orçamento/recibo,,Suspensão,Bucha da balança,2.0,140.0,"Informado: 2 buchas, R$ 280 no total"
+03/01/2024,,Orçamento/recibo,,Mão de obra,Mão de obra,1.0,390.0,
+02/02/2024,,Orçamento/recibo,,Arrefecimento,Radiador,1.0,586.0,
+02/02/2024,,Orçamento/recibo,,Arrefecimento,Aditivo,1.0,50.0,
+02/02/2024,,Orçamento/recibo,,Mão de obra,MO do radiador,1.0,260.0,
+02/02/2024,,Orçamento/recibo,,Freios,Pastilha de freio,1.0,118.0,
+02/02/2024,,Orçamento/recibo,,Mão de obra,MO da troca de pastilha,1.0,120.0,
+04/07/2024,135047,OS 31,Giro Car Service (Novo Hamburgo/RS),Mão de obra,Mão de obra revisão,1.0,290.0,
+04/07/2024,135047,OS 31,Giro Car Service (Novo Hamburgo/RS),Mão de obra,MO buchas de amortecedor,1.0,190.0,
+04/07/2024,135047,OS 31,Giro Car Service (Novo Hamburgo/RS),Mão de obra,MO substituição de flange da bomba,1.0,380.0,
+04/07/2024,135047,OS 31,Giro Car Service (Novo Hamburgo/RS),Elétrica/Iluminação,Palheta,1.0,98.0,"Palheta do limpador; sem categoria específica, ficou em Elétrica"
+04/07/2024,135047,OS 31,Giro Car Service (Novo Hamburgo/RS),Revisão/Óleo e filtros,Filtro de ar do motor,1.0,51.0,
+04/07/2024,135047,OS 31,Giro Car Service (Novo Hamburgo/RS),Revisão/Óleo e filtros,Filtro de ar-condicionado,1.0,46.0,
+04/07/2024,135047,OS 31,Giro Car Service (Novo Hamburgo/RS),Revisão/Óleo e filtros,Filtro de combustível,1.0,37.0,
+04/07/2024,135047,OS 31,Giro Car Service (Novo Hamburgo/RS),Elétrica/Iluminação,Lâmpada do farolete,1.0,29.0,
+04/07/2024,135047,OS 31,Giro Car Service (Novo Hamburgo/RS),Suspensão,Coxim do amortecedor traseiro,1.0,163.0,
+04/07/2024,135047,OS 31,Giro Car Service (Novo Hamburgo/RS),Combustível,Flange da bomba de combustível,1.0,175.0,
+04/07/2024,135047,OS 31,Giro Car Service (Novo Hamburgo/RS),Revisão/Óleo e filtros,Óleo 5w30,4.0,49.0,
+04/07/2024,135047,OS 31,Giro Car Service (Novo Hamburgo/RS),Revisão/Óleo e filtros,Filtro de óleo,1.0,34.0,
+23/08/2024,135996,OS 54,Giro Car Service (Novo Hamburgo/RS),Motor,Retífica do cabeçote,1.0,1200.0,"Entrada 21/08/2024, saída 23/08/2024 (usada a saída). Na OS conta como serviço (serviços 2.800 = retífica 1.200 + MO 1.600)"
+23/08/2024,135996,OS 54,Giro Car Service (Novo Hamburgo/RS),Mão de obra,Mão de obra,1.0,1600.0,
+23/08/2024,135996,OS 54,Giro Car Service (Novo Hamburgo/RS),Arrefecimento,Aditivo de radiador,4.0,38.9,
+23/08/2024,135996,OS 54,Giro Car Service (Novo Hamburgo/RS),Arrefecimento,Válvula termostática,1.0,136.18,
+23/08/2024,135996,OS 54,Giro Car Service (Novo Hamburgo/RS),Motor,Junta da tampa de válvula,1.0,61.0,
+23/08/2024,135996,OS 54,Giro Car Service (Novo Hamburgo/RS),Motor,Mangueira de suspiro,1.0,78.0,
+23/08/2024,135996,OS 54,Giro Car Service (Novo Hamburgo/RS),Motor,Junta do cabeçote,1.0,199.53,
+23/08/2024,135996,OS 54,Giro Car Service (Novo Hamburgo/RS),Motor,Junta do coletor,1.0,32.8,
+16/10/2024,137532,OS 77,Giro Car Service (Novo Hamburgo/RS),Mão de obra,Mão de obra,1.0,180.0,Pago via PIX
+16/10/2024,137532,OS 77,Giro Car Service (Novo Hamburgo/RS),Arrefecimento,Tubo de refrigeração,1.0,88.0,
+16/10/2024,137532,OS 77,Giro Car Service (Novo Hamburgo/RS),Arrefecimento,Aditivo de radiador,3.0,38.9,
+13/12/2024,138696,Orçamento/recibo,,Revisão/Óleo e filtros,Óleo,4.0,49.0,"Informado: 4x, R$ 196 no total"
+13/12/2024,138696,Orçamento/recibo,,Revisão/Óleo e filtros,Filtro de óleo,1.0,32.0,
+13/12/2024,138696,Orçamento/recibo,,Motor,Kit correia dentada,1.0,270.0,
+13/12/2024,138696,Orçamento/recibo,,Motor,Correia auxiliar,1.0,78.0,
+13/12/2024,138696,Orçamento/recibo,,Motor,Rolete esticador,1.0,57.0,
+13/12/2024,138696,Orçamento/recibo,,Motor,Rolete tensor,1.0,106.0,
+13/12/2024,138696,Orçamento/recibo,,Suspensão,Bucha da bandeja,2.0,80.0,"Informado: 2x, R$ 160 no total"
+13/12/2024,138696,Orçamento/recibo,,Suspensão,Kit amortecedor,1.0,198.0,
+13/12/2024,138696,Orçamento/recibo,,Suspensão,Coxim do amortecedor,2.0,112.0,"Informado: 2x, R$ 224 no total"
+13/12/2024,138696,Orçamento/recibo,,Transmissão/Câmbio,Junta homocinética,1.0,161.0,
+13/12/2024,138696,Orçamento/recibo,,Arrefecimento,Líquido de arrefecimento,1.0,32.0,
+13/12/2024,138696,Orçamento/recibo,,Mão de obra,Mão de obra,1.0,650.0,
+14/05/2025,142580,OS 136,Giro Car Service (Novo Hamburgo/RS),Mão de obra,MO revisão,1.0,320.0,"OS emitida 12/05/2025, vencimento 13/05/2025; usada 14/05/2025 (data informada pelo Alexandre)"
+14/05/2025,142580,OS 136,Giro Car Service (Novo Hamburgo/RS),Mão de obra,Rodízio de pneus,1.0,45.0,Serviço na OS; lançado como mão de obra
+14/05/2025,142580,OS 136,Giro Car Service (Novo Hamburgo/RS),Mão de obra,MO freios traseiros,1.0,190.0,
+14/05/2025,142580,OS 136,Giro Car Service (Novo Hamburgo/RS),Freios,Cilindro de roda traseiro,2.0,74.25,
+14/05/2025,142580,OS 136,Giro Car Service (Novo Hamburgo/RS),Revisão/Óleo e filtros,Filtro de cabine,1.0,46.0,
+14/05/2025,142580,OS 136,Giro Car Service (Novo Hamburgo/RS),Revisão/Óleo e filtros,Filtro de óleo,1.0,36.85,
+14/05/2025,142580,OS 136,Giro Car Service (Novo Hamburgo/RS),Pneus/Alinhamento,Geometria,1.0,70.0,Na OS entra em produtos
+14/05/2025,142580,OS 136,Giro Car Service (Novo Hamburgo/RS),Elétrica/Iluminação,Palheta traseira,1.0,59.0,Palheta do limpador
+14/05/2025,142580,OS 136,Giro Car Service (Novo Hamburgo/RS),Freios,Sapata de freio,1.0,182.3,
+14/05/2025,142580,OS 136,Giro Car Service (Novo Hamburgo/RS),Revisão/Óleo e filtros,Filtro de ar,1.0,65.52,
+14/11/2025,145050,OS 188,Giro Car Service (Novo Hamburgo/RS),Mão de obra,MO revisão,1.0,380.0,"Entrada 13/11/2025, saída 14/11/2025 (usada a saída)"
+14/11/2025,145050,OS 188,Giro Car Service (Novo Hamburgo/RS),Revisão/Óleo e filtros,Filtro de óleo,1.0,36.85,
+14/11/2025,145050,OS 188,Giro Car Service (Novo Hamburgo/RS),Revisão/Óleo e filtros,Óleo 5w30,4.0,49.9,
+03/06/2026,,Orçamento/recibo,,Freios,Disco de freio,1.0,386.0,"""Corsa 2011"" é só o rótulo do orçamento; o carro é o 2012"
+03/06/2026,,Orçamento/recibo,,Freios,Pastilha de freio,1.0,127.0,
+03/06/2026,,Orçamento/recibo,,Arrefecimento,Reservatório de água,1.0,110.0,Troca diferente da de 07/07/2023
+03/06/2026,,Orçamento/recibo,,Transmissão/Câmbio,Coxim do câmbio,1.0,346.0,
+03/06/2026,,Orçamento/recibo,,Revisão/Óleo e filtros,Filtro de ar,1.0,65.0,
+03/06/2026,,Orçamento/recibo,,Revisão/Óleo e filtros,Filtro de cabine,1.0,54.0,
+03/06/2026,,Orçamento/recibo,,Revisão/Óleo e filtros,Filtro de combustível,1.0,48.0,
+03/06/2026,,Orçamento/recibo,,Revisão/Óleo e filtros,Óleo,4.0,46.0,"Informado: 4x, R$ 184 no total"
+03/06/2026,,Orçamento/recibo,,Revisão/Óleo e filtros,Filtro de óleo,1.0,38.0,
+03/06/2026,,Orçamento/recibo,,Arrefecimento,Aditivo de radiador,1.0,114.0,
+03/06/2026,,Orçamento/recibo,,Mão de obra,MO revisão,1.0,380.0,
+03/06/2026,,Orçamento/recibo,,Mão de obra,MO freio,1.0,170.0,
+03/06/2026,,Orçamento/recibo,,Mão de obra,MO coxim,1.0,195.0,
+02/10/2026,,Orçamento/recibo,,Escapamento,Escapamento traseiro + mão de obra,1.0,590.0,Valor único com mão de obra junto; não dá pra separar
