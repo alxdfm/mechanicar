@@ -6,11 +6,12 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(
-    entities = [VisitEntity::class, ServiceEntity::class],
-    version = 1,
+    entities = [VehicleEntity::class, VisitEntity::class, ServiceEntity::class],
+    version = 2,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
+    abstract fun vehicleDao(): VehicleDao
     abstract fun visitDao(): VisitDao
     abstract fun serviceDao(): ServiceDao
 

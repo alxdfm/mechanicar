@@ -12,6 +12,7 @@ import com.mechanicar.gastos.data.ExpenseRepository
 import com.mechanicar.gastos.data.ImportResult
 import com.mechanicar.gastos.data.ServiceDraft
 import com.mechanicar.gastos.data.SpreadsheetImporter
+import com.mechanicar.gastos.data.VehicleEntity
 import com.mechanicar.gastos.data.VisitEntity
 import com.mechanicar.gastos.data.VisitWithServices
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -28,6 +29,9 @@ class AppViewModel(
     application: Application,
     private val repository: ExpenseRepository
 ) : AndroidViewModel(application) {
+
+    val vehicle: StateFlow<VehicleEntity?> = repository.observeVehicle()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
     val visits: StateFlow<List<VisitWithServices>> = repository.observeVisits()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
@@ -47,6 +51,14 @@ class AppViewModel(
 
     fun visitFlow(id: Long) = repository.observeVisit(id)
 
+    fun saveVehicle(vehicle: VehicleEntity, onSaved: () -> Unit) {
+        viewModelScope.launch {
+            repository.saveVehicle(vehicle)
+            _message.emit("Dados do veículo salvos.")
+            onSaved()
+        }
+    }
+
     fun saveVisit(
         visitId: Long?,
         date: LocalDate,
@@ -63,7 +75,7 @@ class AppViewModel(
                 return@launch
             }
             val id = repository.saveVisit(visitId, date, odometerKm, origin, workshop, notes, services)
-            _message.emit("Consulta salva.")
+            _message.emit("Manutenção salva.")
             onSaved(id)
         }
     }
@@ -71,7 +83,7 @@ class AppViewModel(
     fun deleteVisit(visit: VisitEntity) {
         viewModelScope.launch {
             repository.deleteVisit(visit)
-            _message.emit("Consulta removida.")
+            _message.emit("Manutenção removida.")
         }
     }
 
@@ -111,7 +123,7 @@ class AppViewModel(
 
     private suspend fun emitImportSuccess(result: ImportResult) {
         _message.emit(
-            "Importação concluída: ${result.visitsCreated} consultas e ${result.servicesCreated} serviços."
+            "Importação concluída: ${result.visitsCreated} manutenções e ${result.servicesCreated} serviços."
         )
     }
 

@@ -7,6 +7,46 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import androidx.room.Relation
 
+@Entity(tableName = "vehicle")
+data class VehicleEntity(
+    @PrimaryKey val id: Long = SINGLE_VEHICLE_ID,
+    val brand: String = "",
+    val model: String = "",
+    val year: Int? = null,
+    val plate: String = "",
+    val color: String = "",
+    val notes: String = ""
+) {
+    val displayName: String
+        get() {
+            val title = listOf(brand, model)
+                .map { it.trim() }
+                .filter { it.isNotEmpty() }
+                .joinToString(" ")
+                .ifBlank { "Meu carro" }
+            val yearPart = year?.toString().orEmpty()
+            val platePart = plate.trim()
+            return buildList {
+                add(listOf(title, yearPart).filter { it.isNotEmpty() }.joinToString(" "))
+                if (platePart.isNotEmpty()) add(platePart)
+            }.joinToString(" · ")
+        }
+
+    companion object {
+        const val SINGLE_VEHICLE_ID = 1L
+
+        fun defaultCorsa() = VehicleEntity(
+            id = SINGLE_VEHICLE_ID,
+            brand = "Chevrolet",
+            model = "Corsa Hatch Maxx",
+            year = 2012,
+            plate = "ISO0D85",
+            color = "Cinza",
+            notes = ""
+        )
+    }
+}
+
 @Entity(tableName = "visits")
 data class VisitEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
